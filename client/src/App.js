@@ -24,6 +24,15 @@ function App() {
         인증에 실패했다면 그에 대한 에러 핸들링을 구현하세요. 
       });
     */
+      return axios
+      .get("https://localhost:4000/userinfo")
+      .then((res) => {
+        setIsLogin(true)
+        setUserInfo(res.data)
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+      });
   };
 
   useEffect(() => {
@@ -39,17 +48,18 @@ function App() {
             path='/'
             element={
               isLogin ? (
-                <Mypage
+                <Mypage userInfo={userInfo} setIsLogin={setIsLogin} setUserInfo={setUserInfo}
+
                 /*
                 TODO: 렌더링에 필요한 App의 상태와 이를 하위 컴포넌트에서 변경할 수 있도록 props를 전달하세요. 
                 */
                 />
               ) : (
-                <Login
+                <Login setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
                 /*
                 TODO: App의 상태를 변경할 수 있도록 props를 전달하세요. 
                 */
-                />
+              
               )
             }
           />
